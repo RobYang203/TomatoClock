@@ -3,13 +3,26 @@
   "version": "1.0.0",
   "description": "tomatoClock ToDo List",
   "main": "index.js",
-  "repository":{
-  	"type":"git",
-  	"url":"https://github.com/RobYang203/TomatoClock.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobYang203/TomatoClock.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --mode development"
   },
   "author": "Tony",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "webpack": "^4.35.3"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.5"
+  }
 }
