@@ -43,7 +43,9 @@
 	border-radius: 210px;
 	color: #F4D03F;
 }
-
+.clockBody.break{
+	color:#19B5FE;
+}
 .clockState{
 	text-align: center;
 	display:inline-block;
@@ -74,6 +76,9 @@
 	color: #FFFFFF;
 	text-align: center;
 }
+.clkBtn .icon{
+	 margin-top: 9px;
+}
 .clkBtn.startBtn{
 	width: 100px;
 	height:100px;
@@ -81,4 +86,221 @@
 	border-radius: 70px;
 	border:8px solid #FFFFFF;
 	margin:0 23.53px 0 23.53px;
+}
+
+.featuresArea{
+	vertical-align: top;
+	background:#33404e;
+	display:inline-block;
+	width:50%;
+	height: 100%;
+}
+
+.featureContent{
+	vertical-align: top;
+	background:#33404e;
+	display:inline-block;
+	width:80%;
+	height: 100%;
+}
+
+.menuList{
+	vertical-align: top;
+	background:#0D151D;
+	display:inline-block;
+	width:20%;
+	height: 100%;
+	box-shadow: 2px 0 5px #000000
+}
+.menuItem:first-child{
+	margin:71px 0 0 0;
+}
+.menuItem{
+	text-align: center;
+	margin:27px 0 0 0;
+}
+.menuIcon{
+	display:inline-block;
+	width:47.77px;
+	height:47.77px;
+	color:#FFF;
+	font-size: 3em;
+}
+.menuIcon.active{
+	color:#F4D03F;
+}
+.menuIcon2{
+	display:inline-block;
+	width:47.77px;
+	height:47.77px;
+	font-size: 3em;
+	background: #FFF;
+}
+.menuIcon2.active{
+	background:#F4D03F;
+}
+.menu-subject{
+	-webkit-mask: url(image/outline-subject-24px.svg);
+	mask: url(image/outline-subject-24px.svg);
+}
+.menu-insert_chart{
+	-webkit-mask: url(image/outline-insert_chart-24px.svg);
+	mask: url(image/outline-insert_chart-24px.svg);
+}
+.menu-free_breakfast{
+	-webkit-mask: url(image/outline-free_breakfast-24px.svg);
+	mask: url(image/outline-free_breakfast-24px.svg);
+}
+.menu-062_Redo_183191{
+	-webkit-mask: url(image/iconfinder_062_Redo_183191.svg);
+	mask: url(image/iconfinder_062_Redo_183191.svg);
+}
+.menu-settings{
+	-webkit-mask: url(image/outline-settings-24px.svg);
+	mask: url(image/outline-settings-24px.svg);
+}
+.btnAddTask{
+	display: inline-block;
+	width: 157.75px;
+	height: 50px;
+	border-radius: 30px;
+	background: #F4D03F;
+	margin: 67px 0 0 289px
+}
+.btnContent{
+	display: inline-block;
+    margin: 7.25px 0 0 12px;
+}
+.btnContent .btnName{
+	vertical-align: top;
+	display: inline-block;
+	font-size: 24px;
+	line-height: 35px;
+}
+.btnContent .btnIcon{
+	vertical-align: top;
+	-webkit-mask: url(image/outline-add_circle_outline-24px.svg);
+	mask: url(image/outline-add_circle_outline-24px.svg);
+	display: inline-block;
+    width: 36px;
+    height: 36px;
+    background: #000;
+}
+
+.pageContent{
+	display: inline-block;
+	margin: 29px 0 0 65px
+}
+.pageContent .title{
+	font-size: 30px;
+	color: #F4D03F;
+}
+.list > ul {
+	padding: 0px
+}
+.list > ul > li{
+	display: inline-block;
+	list-style: none;
+	background: #1B2A3B;
+	padding: 12px 37px 12px 19.46px;
+	margin: 5px 0px;
+	width: 290px;
+	height:16px;
+	color: #FFF;
+}
+.listContent{
+	display: inline-block;
+}
+.listIcon{
+	display: inline-block;
+	color: #F4D03F;
+	width: 15;
+	height:13.04px;
+}
+.listText{
+	vertical-align: top;
+	display: inline-block;
+}
+.doneList .listText{
+	color:#858d96;
+	text-decoration:line-through;
+}
+.donListIcon{
+	vertical-align: top;
+	-webkit-mask: url(image/iconfinder_check_293662.svg);
+	mask: url(image/iconfinder_check_293662.svg);
+	display: inline-block;
+    width: 15px;
+    height: 11px;
+    background: #F4D03F;
+}
+
+.windAddNewTask{
+	display: inline-block;
+    width: 382px;
+    height: 330px;
+    x:705px;
+    y:131px;
+    border-radius:10px;
+    position: absolute;
+    background: #1B2A3B;
+    z-index: 9;
+}
+.windAddNewTask.hidden{
+	display: none
+}
+
+.windAddNewTask .winTitle{
+	display: inline-block;
+	margin: 29px 0 0 26px;
+	width: 271px;
+	height:37px;
+	color:#F4D03F;
+	font-size: 36px;
+}
+.windAddNewTask .content{
+	display: inline-block;
+	margin: 28px 0 0 26px;
+	width: 331px;
+}
+
+.windAddNewTask .content .title{
+	font-size: 21px;
+	color:#FFFFFF;
+}
+
+.windAddNewTask .content .txtContent{
+	display: inline-block;
+	margin: 8px 0 0 0px;
+	width: 300px;
+	height: 33px;
+	background: #3d4a58;
+	border: 0;
+	font-size: 21px;
+	padding: 8px 15px 8px 16px;
+	color:#FFF;
+}
+
+.windAddNewTask .footer{
+	margin: 16px 0 0 0px;
+}
+
+.windAddNewTask .footer .btn{
+	display: inline-block;
+	width: 140px;
+	height: 50px;
+	border-radius: 30px;
+	font-size:24px;
+	text-align: center;
+	background: #FFF;
+	line-height: 45px;
+	vertical-align: top;
+}
+.windAddNewTask .footer .btn.btnSend{
+	background: #F4D03F;
+	margin: 16px 0 0 44px;
+}
+
+.windAddNewTask .footer .btn.btnCancel{
+	margin: 16px 0 0 18px;
 }

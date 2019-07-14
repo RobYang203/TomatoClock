@@ -38,7 +38,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .icon{
-  margin-top: 9px;
+ 
 }
 .icon-times:before {
   content: "\61";
