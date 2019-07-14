@@ -1,0 +1,84 @@
+.t-bgColor{
+	display:inline-block;
+	width:1280px;
+	height:800px;
+	background:#c3c3c3;
+}
+
+.clockArea{
+	display:inline-block;
+	width:50%;
+	height: 100%;
+	background: #283645;
+}
+.titleGroup{
+	margin: 65px 0 0 104px ;
+}
+.nowDateTime{	
+	display:inline-block;
+	width: 165px;
+}
+.nowDone{
+	margin: 0px 0 0 90px;
+	display:inline-block;
+	width: 165px;
+	text-align: right;
+}
+.titleGroup  .title{
+	font-size: 21px;
+	color:#9F9F9F;
+}
+.titleGroup .content{
+	font-size: 42px;
+	color:#FFFFFF;
+}
+
+.clockBody{
+	display:inline-block;
+	margin: 25px 0 0 104px;
+	width: 420px;
+	height:420px;
+	background: #1B2A3B;
+	border:8px solid #1B2A3B;
+	border-radius: 210px;
+	color: #F4D03F;
+}
+
+.clockState{
+	text-align: center;
+	display:inline-block;
+	width: 209px;
+	height:37px;
+	margin: 107px 0 0 106px;
+	font-size: 30px;
+	font-family: Myriad Pro,Myriad Pro;
+}
+
+.countDownArea{
+	margin: 1px 0 0 56px;
+	font-size: 130px;
+	font-family: Myriad Pro,Myriad Pro;
+}
+.clkButtonGroup{
+	text-align: center;
+	margin-top: 38px
+}
+.clkBtn{
+	display:inline-block;
+	vertical-align: top;
+	width: 61.47px;
+	height:61.47px;
+	border-radius: 38px;
+	border:5px solid #FFFFFF;
+	font-size: 3em;
+	color: #FFFFFF;
+	text-align: center;
+}
+.clkBtn.startBtn{
+	width: 100px;
+	height:100px;
+	font-size: 6em;
+	border-radius: 70px;
+	border:8px solid #FFFFFF;
+	margin:0 23.53px 0 23.53px;
+}
