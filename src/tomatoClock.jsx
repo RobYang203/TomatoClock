@@ -9,22 +9,22 @@ export default class tomatoClock extends React.Component{
 				{
 					content:"Test Test Test",
 					type:"todo",
-					state:0
+					state:"standby"
 				},
 				{
 					content:"Test2 Test2 Test2",
 					type:"todo",
-					state:0
+					state:"standby"
 				},
 				{
 					content:"Test3 Test3 Test3",
 					type:"todo",
-					state:0
+					state:"standby"
 				},
 				{
 					content:"Test4 Test4 Test4",
 					type:"done",
-					state:0
+					state:"end"
 				}
 			]
 		};
@@ -51,13 +51,13 @@ class Board extends React.Component{
 
 	onClockStateChange(clockState,clockType){
 		this.state.todoList[0]["state"] = clockState;
-		if(clockState === 2){
+		if(clockState === "end"){
 			const stateValue = this.state;
 			const newClockType = clockType==="break"?"work":"break";
 			this.state.todoList[0]["type"] = clockType==="break"?"todo":"done";
 			stateValue.todoList = this.getListCategory("todo");
 			stateValue.doneList = this.getListCategory("done");
-			
+			stateValue.clockType = newClockType;
 			this.setState(stateValue);
 		}
 		console.log(this.state.todoList[0]["state"])
@@ -67,7 +67,7 @@ class Board extends React.Component{
 		const tmp = {
 					content:v,
 					type:"todo",
-					state:0
+					state:"standby"
 				};
 		stateValue["list"] = stateValue["list"] .concat(tmp);
 		this.setState(stateValue);

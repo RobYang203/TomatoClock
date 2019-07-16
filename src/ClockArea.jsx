@@ -2,31 +2,31 @@
 export default class ClockArea extends React.Component{
 	constructor(props){
 		super(props);
+		//clockState : standby、reset、processing、end、pasued
 		this.state = {
 			refreshCount:0,
 			countDown:{
 				countDownTime:0,
-				isPaused:true,
+				clockState:'standby',
 				StartTime:0,
 				PauseTime:0
 			}
 		};
 		this.refreshClockArea = this.refreshClockArea.bind(this);
 		this.setCancelBtnClick = this.setCancelBtnClick.bind(this);
-		this.setStartBtnClick = this.setStartBtnClick.bind(this);
+		this.setChangeClockState = this.setChangeClockState.bind(this);
 		this.setResetBtnClick = this.setResetBtnClick.bind(this);
-		this.getClockState = this.getClockState.bind(this);
 	}
 
 	refreshClockArea(){
 		const refreshCount = this.state.refreshCount+1;
-		const {StartTime,isPaused}=this.state.countDown;
-		if(StartTime > 0 && !isPaused)
+		const countDown=this.state.countDown;
+		if(countDown.clockState === "processing")
 			this.countDownCalc();
 
 		const isBreak = this.props.clockType === "break";
-		if(isBreak)
-			this.setStartBtnClick(false);
+		if(isBreak && countDown.clockState === "standby")
+			this.setChangeClockState(false);
 		this.setState(
 			{
 				refreshCount:refreshCount
@@ -37,69 +37,71 @@ export default class ClockArea extends React.Component{
 	countDownCalc(){
 		let {StartTime} = this.state.countDown;
 		const {PauseTime} = this.state.countDown; 
+
+		//判斷目前倒數類型是 "工作中" 還是 "休息"
 		const clockType = this.props.clockType;
-		const isBreak = this.props.clockType === "break";
-		const totalMin = isBreak?0.5:0.5;
+		const isBreak = clockType === "break";
+		
+		//設定倒數秒數
+		const workTime = 0.5 , breakTime = 0.5;
+		const totalMin = isBreak?workTime:breakTime;
+
+		//轉成 ms
 		const totalTime = totalMin*60*1000;
+
+		//判斷目前是否在暫停之後的重新啟用
 		const isReStart = PauseTime>0;
+		//暫停，會在開始的時間補上暫停的時間，確認倒數秒數不會變動
 		const pauseTime = isReStart? Date.now()- PauseTime:0;
 		StartTime +=pauseTime ;	
 
+		//計算目前剩餘秒數，超過一秒再做計算
 		const remainingTime = Date.now()-StartTime;
-		const isStandard = remainingTime >=1000;
+		const isStandard = remainingTime >500;
 		const spendTime = isStandard?remainingTime:0;
 		const nowCountDownTime = (totalTime - spendTime)/1000; 
 		const isEnd = nowCountDownTime<=0;
 
-		this.state.countDown.StartTime = isEnd?0:StartTime;	
-		this.state.countDown.isPaused = isEnd;
-		this.state.countDown.countDownTime=nowCountDownTime;
+		this.state.countDown.StartTime = isEnd? 0 : StartTime;	
+		this.state.countDown.clockState = isEnd?"standby":this.state.countDown.clockState;
+		this.state.countDown.countDownTime = nowCountDownTime;
 		this.state.countDown.PauseTime = 0;
-
-		const clockState = isEnd? 2 : 1;
+		console.log(nowCountDownTime)
 		if(isEnd)
-			this.props.onClockStateChange(clockState,clockType);
+			this.props.onClockStateChange("end",clockType);
 	}
 
-	setStartBtnClick(isPaused){
-		//const isStateChange = this.state.countDown.isPaused !== isPaused;
-		const {StartTime,PauseTime} = this.state.countDown;
-		this.state.countDown.isPaused = isPaused;
+	setChangeClockState(isProcessing){
 		const nowTime = Date.now();
-		const isNewStart = !isPaused && StartTime <=0;
-		const isProcessing = !isNewStart && !isPaused;
-		const clockState = isNewStart || isProcessing? 1 : 3;
-
-		this.state.countDown.StartTime= isNewStart?nowTime:StartTime;
-		this.state.countDown.PauseTime = isPaused?nowTime:PauseTime;
-		
-		this.props.onClockStateChange(clockState);
-	}
-	getClockState(){
-		const {StartTime,PauseTime,isPaused,countDownTime} = this.state.countDown;
-
-		const isNewStart = PauseTime<=0 && StartTime <=0;
-		const isProcessing = !isNewStart && !isPaused;
-
-		let clockState =0;
-		if(isNewStart){
-			clockState = 0;
-		}else if(isProcessing){
-			clockState = 1;
-		}else if(isPaused){
-			clockState = countDownTime > 0? 3: 2;
+			
+		const countDown = this.state.countDown;
+		countDown.clockState = isProcessing?'pasued':'processing';
+		switch(countDown.clockState){
+			case "processing":
+				const isNewStart = countDown.StartTime <=0;
+				countDown.StartTime= isNewStart? nowTime: countDown.StartTime;
+				break;
+			case "pasued":
+				countDown.PauseTime = nowTime;
+				break;
 		}
-		return clockState;
+
+		
+		this.props.onClockStateChange(countDown.clockState,this.props.clockType);
 	}
 
 	setResetBtnClick(){
 		alert("Reset");
-		this.state.countDown ={
+		this.state = {
+			refreshCount:0,
+			countDown:{
 				countDownTime:0,
-				isPaused:true,
+				clockState:'standby',
 				StartTime:0,
 				PauseTime:0
-			};
+			}
+		};
+		this.props.onClockStateChange("standby",this.props.clockType);
 	}
 	setCancelBtnClick(){
 		alert("Cancel");
@@ -113,8 +115,6 @@ export default class ClockArea extends React.Component{
 		const nowDate = new Date();
 		const date=  `${nowDate.getFullYear()}/${nowDate.getMonth()+1}/${nowDate.getDate()}`;
 		const time=  `${nowDate.getHours()}:${nowDate.getMinutes()}`;
-		const done ="5";
-		const totalDo="10";
 
 		return(
 			<div className="clockArea">
@@ -129,10 +129,10 @@ export default class ClockArea extends React.Component{
 					countDownTime={this.state.countDown.countDownTime}
 				/>
 				<ClockButtonGroup
-					setStartBtnClick = {this.setStartBtnClick}
+					clockState = {this.state.countDown.clockState}
+					setChangeClockState = {this.setChangeClockState}
 					setCancelBtnClick = {this.setCancelBtnClick}
 					setResetBtnClick = {this.setResetBtnClick}
-					getClockState = {this.getClockState}
 				/>
 			</div>
 
@@ -211,18 +211,17 @@ class ClockButtonGroup extends React.Component{
 	}
 	changeStartBtnState(){
 		
-		const nowIcon = this.state.startBtnIcon;
-		const clockState = this.props.getClockState();
-		const isProcessing = clockState === 1;
+		const clockState = this.props.clockState;
+		const isProcessing = clockState === 'processing';
 		const changeIcon = isProcessing?"icon-playback-play":"icon-playback-pause";
 		this.setState({
 			startBtnIcon:changeIcon
 		});
-		this.props.setStartBtnClick(isProcessing);
+		this.props.setChangeClockState(isProcessing);
 	}
 	getInitStartBtnIcon(){
-		const clockState = this.props.getClockState();
-		const isProcessing = clockState === 1;
+		const clockState = this.props.clockState;
+		const isProcessing = clockState === 'processing';
 		const changeIcon = !isProcessing?"icon-playback-play":"icon-playback-pause";
 		return changeIcon;
 	}
@@ -232,13 +231,13 @@ class ClockButtonGroup extends React.Component{
 
 		return (
 			<div className="clkButtonGroup">
-				<div className="clkBtn cancelBtn" onClick={setCancelBtnClick}>
+				<div className="clkBtn cancelBtn" onClick={this.setCancelBtnClick}>
 					<div className="icon icon-times"></div>
 				</div>
 				<div className="clkBtn startBtn" onClick={this.changeStartBtnState}>
 					<div className={startBtnIcon}></div>
 				</div>
-				<div className="clkBtn retsetBtn" onClick={setResetBtnClick}>
+				<div className="clkBtn retsetBtn" onClick={this.setResetBtnClick}>
 					<div className="icon icon-cw"></div>
 				</div>				
 			</div>
