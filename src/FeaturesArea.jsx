@@ -132,15 +132,21 @@ class PageHome extends React.Component{
 					/>
 					<div className="toDoList list">
 						<div className="title">To do</div>
-						<ul>
-							{todoListGroup}
-						</ul>
+						<div className="content">
+							<ul>
+								{todoListGroup}
+							</ul>
+						</div>
+						
 					</div>
 					<div className="doneList list">
 						<div className="title">Done</div>
-						<ul>
-							{doneListGroup}
-						</ul>
+						<div className="content">
+							<ul>
+								{doneListGroup}
+							</ul>
+						</div>
+						
 					</div>
 				</div>
 

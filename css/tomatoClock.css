@@ -195,10 +195,10 @@
 	font-size: 30px;
 	color: #F4D03F;
 }
-.list > ul {
+.list > .content > ul {
 	padding: 0px
 }
-.list > ul > li{
+.list > .content > ul > li{
 	display: inline-block;
 	list-style: none;
 	background: #1B2A3B;
@@ -208,6 +208,41 @@
 	height:16px;
 	color: #FFF;
 }
+.list > .content{
+	overflow: auto;
+	height: 250px;
+	display: inline-block;
+	width: 90%;
+
+}
+.list > .content > .scrollBar{
+
+}
+::-webkit-scrollbar {
+      width: 15px;
+} 
+
+/*scroll 軌道*/
+::-webkit-scrollbar-track {
+      background-color: #1B2A3B;
+      border-radius: 20px;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ /*滑動條*/
+::-webkit-scrollbar-thumb {
+      background-color: #F4D03F; 
+      border-radius: 20px
+} /* this will style the thumb, ignoring the track */
+ /*scroll 上下按鈕*/
+::-webkit-scrollbar-button {
+	display: none;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+ 
+ /*x y 的交匯處*/
+::-webkit-scrollbar-corner {
+      background-color: black;
+
+} 
+
 .listContent{
 	display: inline-block;
 }

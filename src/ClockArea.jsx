@@ -8,8 +8,8 @@ export default class ClockArea extends React.Component{
 			countDown:{
 				countDownTime:0,
 				clockState:'standby',
-				StartTime:0,
-				PauseTime:0
+				startTime:0,
+				pauseTime:0
 			}
 		};
 		this.refreshClockArea = this.refreshClockArea.bind(this);
@@ -35,8 +35,8 @@ export default class ClockArea extends React.Component{
 	}
 	//計算倒數時間，假如有暫停，會在開始的時間補上暫停的時間，確認倒數秒數不會變動
 	countDownCalc(){
-		let {StartTime} = this.state.countDown;
-		const {PauseTime} = this.state.countDown; 
+		let {startTime} = this.state.countDown;
+		const {pauseTime} = this.state.countDown; 
 
 		//判斷目前倒數類型是 "工作中" 還是 "休息"
 		const clockType = this.props.clockType;
@@ -50,22 +50,22 @@ export default class ClockArea extends React.Component{
 		const totalTime = totalMin*60*1000;
 
 		//判斷目前是否在暫停之後的重新啟用
-		const isReStart = PauseTime>0;
+		const isReStart = pauseTime>0;
 		//暫停，會在開始的時間補上暫停的時間，確認倒數秒數不會變動
-		const pauseTime = isReStart? Date.now()- PauseTime:0;
-		StartTime +=pauseTime ;	
+		const pauseRemainingTime = isReStart? Date.now()- pauseTime:0;
+		startTime +=pauseRemainingTime ;	
 
 		//計算目前剩餘秒數，超過一秒再做計算
-		const remainingTime = Date.now()-StartTime;
+		const remainingTime = Date.now()-startTime;
 		const isStandard = remainingTime >500;
 		const spendTime = isStandard?remainingTime:0;
 		const nowCountDownTime = (totalTime - spendTime)/1000; 
 		const isEnd = nowCountDownTime<=0;
 
-		this.state.countDown.StartTime = isEnd? 0 : StartTime;	
+		this.state.countDown.startTime = isEnd? 0 : startTime;	
 		this.state.countDown.clockState = isEnd?"standby":this.state.countDown.clockState;
 		this.state.countDown.countDownTime = nowCountDownTime;
-		this.state.countDown.PauseTime = 0;
+		this.state.countDown.pauseTime = 0;
 		console.log(nowCountDownTime)
 		if(isEnd)
 			this.props.onClockStateChange("end",clockType);
@@ -78,11 +78,11 @@ export default class ClockArea extends React.Component{
 		countDown.clockState = isProcessing?'pasued':'processing';
 		switch(countDown.clockState){
 			case "processing":
-				const isNewStart = countDown.StartTime <=0;
-				countDown.StartTime= isNewStart? nowTime: countDown.StartTime;
+				const isNewStart = countDown.startTime <=0;
+				countDown.startTime= isNewStart? nowTime: countDown.startTime;
 				break;
 			case "pasued":
-				countDown.PauseTime = nowTime;
+				countDown.pauseTime = nowTime;
 				break;
 		}
 
@@ -97,8 +97,8 @@ export default class ClockArea extends React.Component{
 			countDown:{
 				countDownTime:0,
 				clockState:'standby',
-				StartTime:0,
-				PauseTime:0
+				startTime:0,
+				pauseTime:0
 			}
 		};
 		this.props.onClockStateChange("standby",this.props.clockType);
