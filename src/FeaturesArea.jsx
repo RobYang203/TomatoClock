@@ -1,3 +1,4 @@
+import {Bar} from "react-chartjs-2"
 //功能設定區
 export default class FeaturesArea extends React.Component{
 	constructor(props){
@@ -32,7 +33,11 @@ export default class FeaturesArea extends React.Component{
 			ret = <PageFree_breakfast/>;
 			break;
 			case "insert_chart":
-			ret = <PageInsert_chart/>;
+			ret = <PageInsert_chart
+					todoList={this.props.todoList}
+					doneList={this.props.doneList}
+					featuresListener={this.props.featuresListener}
+					/>;
 			break;
 			case "settings":
 			ret = <PageSettings/>;
@@ -193,12 +198,12 @@ class PageSubject extends React.Component{
 		super(props);
 	
 	}
-
+		
 	render(){
-
+		
 		return (
 			<div className="featureContent">
-2
+				
 			</div>
 			);
 	}
@@ -221,17 +226,235 @@ class PageFree_breakfast extends React.Component{
 class PageInsert_chart extends React.Component{
 	constructor(props){
 		super(props);
-	
+		const nowDate = new Date();
+		const dayMs = 24 * 60 * 60 * 1000;
+		const starDateMs = nowDate.getTime() - 6 * dayMs;
+		const startDate = new Date(starDateMs);
+		const weekEndDayString=  `${nowDate.getFullYear()}/${nowDate.getMonth()+1}/${nowDate.getDate()}`;
+		const weekStartDayString=  `${startDate.getFullYear()}/${startDate.getMonth()+1}/${startDate.getDate()}`;
+
+		this.state ={
+			chartWeek:{
+				start:weekStartDayString,
+				end:weekEndDayString
+			}
+		};
+		this.getDateList = this.getDateList.bind(this);
+		this.getWeekList = this.getWeekList.bind(this);
+		this.setChartWeek = this.setChartWeek.bind(this);
 	}
+	getDateList(list , nowDate){
+		return list.filter(function(item){
+			const thisDate = new Date(item.date);
+			return thisDate.getTime() === nowDate.getTime();
+		});
+	}
+	getWeekList(list , nowDate, weekStartDate){
+		return list.filter(function(item){
+			const theDay = new Date(item.date);
+			const isThisWeek = theDay >= weekStartDate  && theDay <=nowDate;
+			return  isThisWeek;
+		});
+	}
+	setChartWeek(e ,type){
+		const {start,end} = this.state.chartWeek;
+		const dayMs = 24 * 60 * 60 * 1000;
+		const weekMs = 7 * dayMs;
+		let newStartMs;		
+		let newEndMs ;
+		switch(type){
+			case "pre":
+				newStartMs = new Date(start).getTime() - weekMs ;
+				newEndMs = new Date(end).getTime() - weekMs ;	
+				break;
+			case "next":
+				newStartMs = new Date(start).getTime() + weekMs ;
+				newEndMs = new Date(end).getTime() + weekMs;	
+				break;
 
+		}
+
+		const newStartDate = new Date(newStartMs);
+		const newEndDate = new Date(newEndMs);
+		const nowDate = new Date();
+		if(nowDate < newStartDate)
+			return;
+
+		const weekEndDayString=  `${newEndDate.getFullYear()}/${newEndDate.getMonth()+1}/${newEndDate.getDate()}`;
+		const weekStartDayString=  `${newStartDate.getFullYear()}/${newStartDate.getMonth()+1}/${newStartDate.getDate()}`;
+		const newChartWeek ={
+			start:weekStartDayString,
+			end:weekEndDayString
+		}
+		this.setState({
+			chartWeek:newChartWeek
+		});
+	}
+	createChartDate(doneList,date){
+		const labels = [];
+		const dataSetData = [];
+		let maxlen= 0;
+		const startDate = new Date(date);
+		for(let i = 0 ; i < 7; i++){
+			const dayMs = 24 * 60 * 60 * 1000;
+			const startDateMs =  new Date(startDate).getTime() + (dayMs*i) ;
+			const tmpStartDate = new Date(startDateMs);
+
+			const startDateMonth = tmpStartDate.getMonth()+1;
+			const month = startDateMonth <10?"0"+startDateMonth:startDateMonth;
+			const startDateDay = tmpStartDate.getDate();
+			const day = startDateDay <10 ? "0"+ startDateDay: startDateDay;
+			const dayString=  `${startDateMonth}/${startDateDay}`;
+			const tmpDate = new Date(tmpStartDate.getFullYear()+"/"+dayString);
+			const tmplen = this.getDateList(doneList,tmpDate).length;
+			labels.push(dayString);
+			dataSetData.push(tmplen);
+			if(maxlen < tmplen)
+				maxlen = tmplen ;
+		}
+		const data ={
+					labels:labels, // 標題
+					datasets: [{
+						data: dataSetData, 
+						backgroundColor: "#F4D03F",
+                      	hoverBackgroundColor:"#F4D03F",
+                        borderSkipped:"bottom",
+						borderWidth: 1 // 外框寬度
+					}]
+				};
+		const option = {
+				legend: {
+				  	display:false
+				},
+				layout:{
+					padding:{
+						left:10,
+						right:10,
+						top:30,
+						bottom:10
+					}
+				},
+				scales: {
+				    xAxes: [
+					    {
+							gridLines:{
+								display:false
+							},
+					    	ticks: {
+					          fontSize: 20,
+					          fontColor:"#9F9F9F"
+					      }
+				  		}
+				  	],
+				  	yAxes:[
+						{
+							gridLines:{
+								display:false
+							},
+							ticks:{
+								min:0,
+								max:maxlen+5,
+				          		fontColor:"#9F9F9F",
+				          		fontSize: 20,
+							}	
+						}
+				  	]
+				  }
+				};
+		const ret = {
+			data:data,
+			option:option
+		}
+		return ret;
+	}
 	render(){
+		const nowDate = new Date();
+		const weekEndDayString=  `${nowDate.getFullYear()}/${nowDate.getMonth()+1}/${nowDate.getDate()}`;
+		const weekStartDayString=  `${nowDate.getFullYear()}/${nowDate.getMonth()+1}/${nowDate.getDate()-7}`;
 
+		const weekStartDate = new Date(weekStartDayString);
+		const weekEndDate = new Date(weekEndDayString)
+		const {todoList ,doneList} = this.props;
+		const todayTodoList = this.getDateList(todoList,weekEndDate); 
+		const todayDoneList = this.getDateList(doneList,weekEndDate); 
+		const todayListLength =  todayTodoList.length + todayDoneList.length;
+
+		const weekTodoList = this.getWeekList(todoList,weekEndDate,weekStartDate);
+		const weekDoneList = this.getWeekList(doneList,weekEndDate,weekStartDate);
+		const weekListLength =  weekTodoList.length + weekDoneList.length;
+
+		const {start,end} = this.state.chartWeek;
+		const chartData= this.createChartDate(doneList,start); 
+		
 		return (
-			<div className="featureContent">
-4
+			<div>
+				<div className="numberStatistics">
+					<NumberStatistics
+						type="Toady"
+						date={weekEndDayString}
+						listCount={todayListLength}
+						doneCount={todayDoneList.length}
+					/>
+					<NumberStatistics
+						type="Week"
+						date=""
+						listCount={weekListLength}
+						doneCount={weekDoneList.length}
+					/>
+				</div>
+				<div className="chartStatistics">
+					<div className="nav">
+						<span className="title">
+							Chart
+						</span>
+						<div className="weekControl">
+							<div  className="btn btnPre" onClick={(e)=>{ this.setChartWeek(e,"pre");}}>
+								<div className="arrow yellow "></div>
+								<div className="arrow background "></div>
+							</div>
+							<div className="weekView">{start} ~ {end}</div>
+							<div  className="btn btnNext" onClick={(e)=>{ this.setChartWeek(e,"next");}}>
+								<div className="arrow yellow "></div>
+								<div className="arrow background "></div>
+							</div>
+						</div>
+					</div>
+					<div className="content">
+						<Bar
+							data={chartData.data}
+							options={chartData.option}
+							/>
+					</div>
+				</div>
 			</div>
 			);
 	}
+}
+
+function NumberStatistics(props){
+	const {type,date,listCount,doneCount} = props;
+	const listCountString = listCount <10? `0${listCount}`: listCount;
+	const doneCountString = doneCount <10 ? `0${doneCount}`: doneCount;
+	return (
+		<div className="column">
+			<div className="title">
+				<span className="type">{type}</span>
+				<span className="date">{date}</span>
+			</div>
+			<div className="content">
+				<div className="data list">
+					<div>{listCountString}</div>
+					<div className="title">List</div>
+				</div>
+				<div className="separation"></div>
+				<div className="data done">
+					<div>{doneCountString}</div>
+					<div className="title">Done</div>
+				</div>
+			</div>
+		</div>
+		);
+
 }
 class PageSettings extends React.Component{
 	constructor(props){
@@ -276,12 +499,6 @@ class MenuList extends React.Component{
 			<div className="menuList">
 				<div className="menuItem">
 					<div className={homeIcon} data-menuname="home" onClick={this.onMenuItemClick}></div>
-				</div>
-				<div className="menuItem">
-					<div className={subjectIcon} data-menuname="subject" onClick={this.onMenuItemClick}></div>
-				</div>
-				<div className="menuItem">
-					<div className={free_breakfastIcon} data-menuname="free_breakfast" onClick={this.onMenuItemClick}></div>
 				</div>
 				<div className="menuItem">
 					<div className={insert_chartIcon} data-menuname="insert_chart" onClick={this.onMenuItemClick}></div>
