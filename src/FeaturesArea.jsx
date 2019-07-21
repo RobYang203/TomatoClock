@@ -40,7 +40,10 @@ export default class FeaturesArea extends React.Component{
 					/>;
 			break;
 			case "settings":
-			ret = <PageSettings/>;
+			ret = <PageSettings
+					ringList={this.props.ringList}
+					featuresListener={this.props.featuresListener}
+					/>;
 			break;
 		}
 		return ret;
@@ -77,7 +80,7 @@ class PageHome extends React.Component{
 	}
 	onAddTaskClick(e){
 		this.setState({
-			addWinCls:"windAddNewTask"
+			addWinCls:"windAddNewTask win"
 		});
 	}
 	getListItem(list){
@@ -96,7 +99,7 @@ class PageHome extends React.Component{
 	}
 	onCancelWinClick(){
 		this.setState({
-			addWinCls:"windAddNewTask hidden",
+			addWinCls:"windAddNewTask win hidden",
 			txtValue:""
 		});
 	}
@@ -108,9 +111,9 @@ class PageHome extends React.Component{
 	}
 	onSendClick(){
 
-		this.props.featuresListener(this.state.txtValue);
+		this.props.featuresListener("home",this.state.txtValue);
 		this.setState({
-			addWinCls:"windAddNewTask hidden",
+			addWinCls:"windAddNewTask win hidden",
 			txtValue:""
 		});
 	}
@@ -338,7 +341,8 @@ class PageInsert_chart extends React.Component{
 				    xAxes: [
 					    {
 							gridLines:{
-								display:false
+								display:false,
+								color: '#FFF'
 							},
 					    	ticks: {
 					          fontSize: 20,
@@ -349,7 +353,8 @@ class PageInsert_chart extends React.Component{
 				  	yAxes:[
 						{
 							gridLines:{
-								display:false
+								display:false,
+								color: '#FFF'
 							},
 							ticks:{
 								min:0,
@@ -459,19 +464,67 @@ function NumberStatistics(props){
 class PageSettings extends React.Component{
 	constructor(props){
 		super(props);
-	
+		this.state ={
+			ring : this.props.ringList
+		}
+		this.ringList =["None","Horse","LionKing","Mario"];
+		this.createRadioGroup = this.createRadioGroup.bind(this);
+		this.onRadioGroupChange = this.onRadioGroupChange.bind(this);
 	}
-
+	createRadioGroup(gpName){
+		const ret=[];
+		const {ring} = this.state;
+		this.ringList.map((item)=>{
+			const isChecked = ring[gpName] === item;
+			const tmp = <RadioButton radioID={gpName+"_"+item} radioText={item} radioName={gpName} isChecked={isChecked}/>
+			ret.push(tmp);
+		});
+		return ret;
+	}
+	onRadioGroupChange(e,type){
+		console.log(e.target)
+		const selectedRing = e.target.value;
+		this.state.ring[type] = selectedRing;
+		this.props.featuresListener("setting",this.state.ring);
+		this.setState({
+			ring:this.state.ring
+		});
+	}
 	render(){
-
+		const workRingList = this.createRadioGroup("work");
+		const breakRingList = this.createRadioGroup("break");
 		return (
-			<div className="featureContent">
-5
+			<div >
+				<div className="settingArea workArea">
+					<div className="title">Work</div>
+					<div className="content" onChange={(e)=>{this.onRadioGroupChange(e,"work")}}>
+						{workRingList}
+					</div>
+				</div>
+				<div className="settingArea breakArea">
+					<div className="title">Break</div>
+					<div className="content" onChange={(e)=>{this.onRadioGroupChange(e,"break")}}>
+						{breakRingList}
+					</div>
+				</div>
 			</div>
 			);
 	}
 }
-
+function RadioButton(props){
+	const {radioID,radioName,radioText,isChecked} = props;
+	return(
+		<div className="radioItem">
+			<input type="radio" id={radioID} name={radioName} value={radioText} checked={isChecked}/>
+    		<label htmlFor={radioID}>
+    			<span className="radioBorder">
+    				<span className="radopChecked"></span>
+    			</span>
+    			{radioText}
+    		</label>
+		</div>
+			);
+}
 class MenuList extends React.Component{
 	constructor(props){
 		super(props);

@@ -5,7 +5,7 @@ const list = [];
 const dataLen = 70;
 for (let i = 0; i < dataLen; i++) {
 	
-		
+	
 	const typeState= i===0? 0: parseInt((i/5))%2;
 	const isDone = typeState === 0;
 	
@@ -13,12 +13,15 @@ for (let i = 0; i < dataLen; i++) {
 	const newState = isDone?"end":"standby";
 
 	const days = parseInt(i / 10);
-	const saveDate = `${nowDate.getFullYear()}/${nowDate.getMonth()+1}/${nowDate.getDate()-days}`;	
+	const dayMs = 24 * 60 * 60 * 1000;
+	const saveMs = nowDate.getTime() - dayMs* days;
+	const saveDate = new Date(saveMs);	
+	const saveDateString =  `${saveDate.getFullYear()}/${saveDate.getMonth()+1}/${saveDate.getDate()}`;
 	const tmp = {
 		content: "Test Test Test"+i,
 		type: nowType,
 		state: newState,
-		date: saveDate
+		date: saveDateString
 	}
 	list.push(tmp);
 	

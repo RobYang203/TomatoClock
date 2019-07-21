@@ -24,9 +24,6 @@ export default class ClockArea extends React.Component{
 		if(countDown.clockState === "processing")
 			this.countDownCalc();
 
-		const isBreak = this.props.clockType === "break";
-		if(isBreak && countDown.clockState === "standby")
-			this.setChangeClockState(false);
 		this.setState(
 			{
 				refreshCount:refreshCount
@@ -179,13 +176,15 @@ class CountdownClock extends React.Component{
 	render() {
 		const {countDownTime} = this.props;
 		const isEnd = countDownTime<=0;
-		const minutes = !isEnd?parseInt(countDownTime/60):25;
-		const seconds =  !isEnd?parseInt(countDownTime%60):0;
-		const minutesString = this.stringFormat(minutes);
-		const secondsString = this.stringFormat(seconds);
 		const isWork = this.props.clockType === "work";
 		const clockTypeString = isWork?"Work":"Break";
 		const clockBody = isWork?"clockBody":"clockBody break"
+		const startMinutes = isWork?25:5;
+		const minutes = !isEnd?parseInt(countDownTime/60):startMinutes;
+		const seconds =  !isEnd?parseInt(countDownTime%60):0;
+		const minutesString = this.stringFormat(minutes);
+		const secondsString = this.stringFormat(seconds);
+
 		return (
 			<div className={clockBody}>
 				<div className="clockState">

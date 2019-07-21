@@ -285,7 +285,7 @@
 	display: none
 }
 
-.windAddNewTask .winTitle{
+.win .winTitle{
 	display: inline-block;
 	margin: 29px 0 0 26px;
 	width: 271px;
@@ -293,18 +293,18 @@
 	color:#F4D03F;
 	font-size: 36px;
 }
-.windAddNewTask .content{
+.win .content{
 	display: inline-block;
 	margin: 28px 0 0 26px;
 	width: 331px;
 }
 
-.windAddNewTask .content .title{
+.win .content .title{
 	font-size: 21px;
 	color:#FFFFFF;
 }
 
-.windAddNewTask .content .txtContent{
+.win .content .txtContent{
 	display: inline-block;
 	margin: 8px 0 0 0px;
 	width: 300px;
@@ -316,11 +316,11 @@
 	color:#FFF;
 }
 
-.windAddNewTask .footer{
+.win .footer{
 	margin: 16px 0 0 0px;
 }
 
-.windAddNewTask .footer .btn{
+.win .footer .btn{
 	display: inline-block;
 	width: 140px;
 	height: 50px;
@@ -331,12 +331,12 @@
 	line-height: 45px;
 	vertical-align: top;
 }
-.windAddNewTask .footer .btn.btnSend{
+.win .footer .btn.btnSend{
 	background: #F4D03F;
 	margin: 16px 0 0 44px;
 }
 
-.windAddNewTask .footer .btn.btnCancel{
+.win .footer .btn.btnCancel{
 	margin: 16px 0 0 18px;
 }
 
@@ -458,4 +458,83 @@
 	height: 318px;
 	box-shadow: 0 3px 6px #000000;
 	margin-top: 16px;
+}
+
+.winTimeUp{
+	position: absolute;
+	display: inline-block;
+    width: 382px;
+    height: 330px;
+    border-radius:10px;
+    background: #1B2A3B;
+    z-index: 9;
+    top:25%;
+    left: 25%;
+    box-shadow: 1px 1px 5px #000;
+}
+.winMask.hidden{
+	display: none;
+}
+.winMask{
+	position: absolute;
+    z-index: 8;
+    width: 67%;
+    display: inline-block;
+    height: 91%;
+    background: rgba(115, 115, 115, 0.3);
+    top: 0px;
+    left: 0px;
+}
+
+input[type="radio"]{
+	display:none;
+}
+input[type="radio"] + label{
+	color:#FFFFFF;
+}
+input[type="radio"] + label .radioBorder{
+	display: inline-block;
+	width: 19.9px;
+	height: 19.9px;
+	border:3px solid #FFF;
+	border-radius: 15px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 5px 5px;
+}
+
+input[type="radio"]:checked + label{
+	color:#F4D03F;
+}
+input[type="radio"]:checked + label .radioBorder{
+	border:3px solid #F4D03F;
+}
+input[type="radio"]:checked + label .radopChecked{
+    display: inline-block;
+	width: 10.9px;
+	height: 10.9px;
+	border:1px solid #F4D03F;
+	border-radius: 10px;
+	background: #F4D03F;
+	margin-top: 3px;
+}
+.settingArea{
+	margin: 5px 0 0 10px;
+}
+.settingArea .title{
+	color:#FFF;
+	font-size: 42px;
+}
+.settingArea .content{
+	display: inline-block;
+	width: 480px;
+	height: 240px;
+	background: #1B2A3B;
+	margin: 12px 0 0 0;
+	border-radius: 5px
+}
+.radioItem{
+	display: inline-block;
+	width: 30%;
+	padding: 5px;
 }
