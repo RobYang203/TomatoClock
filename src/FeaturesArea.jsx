@@ -1,5 +1,5 @@
 import {Bar} from "react-chartjs-2"
-//功能設定區
+//功能設定區 選單/功能
 export default class FeaturesArea extends React.Component{
 	constructor(props){
 		super(props);	
@@ -9,13 +9,14 @@ export default class FeaturesArea extends React.Component{
 		this.getActivePage = this.getActivePage.bind(this);
 		this.setPageChange =this.setPageChange.bind(this);
 	}
-
+	//取得並設定指定選單頁
 	setPageChange(menu){
 		this.setState({
 			nowActivePage:menu
 		});
 	}
-
+	
+	//取得目前要顯示哪一頁
 	getActivePage(pageName){
 		let ret = "";
 		switch(pageName){
@@ -78,11 +79,37 @@ class PageHome extends React.Component{
 			txtValue:""
 		};
 	}
+
+	//按下新增任務事件
 	onAddTaskClick(e){
 		this.setState({
 			addWinCls:"windAddNewTask win"
 		});
 	}
+	//新增任務畫面按鈕取消的事件
+	onCancelWinClick(){
+		this.setState({
+			addWinCls:"windAddNewTask win hidden",
+			txtValue:""
+		});
+	}
+	//新增任務畫面按鈕送出的事件
+	onSendClick(){
+
+		this.props.featuresListener("home",this.state.txtValue);
+		this.setState({
+			addWinCls:"windAddNewTask win hidden",
+			txtValue:""
+		});
+	}
+	//新增任務畫面 input 輸入的值
+	onContentChange(e){
+		const stateValue = this.state;
+		const txtValue = e.target.value;
+		stateValue.txtValue = txtValue;
+		this.setState(stateValue);
+	}
+	//取得 ToDo or Done List 的實作
 	getListItem(list){
 		if(list === null || list.length === 0)
 			return "";
@@ -97,26 +124,8 @@ class PageHome extends React.Component{
 		});
 		return retList;
 	}
-	onCancelWinClick(){
-		this.setState({
-			addWinCls:"windAddNewTask win hidden",
-			txtValue:""
-		});
-	}
-	onContentChange(e){
-		const stateValue = this.state;
-		const txtValue = e.target.value;
-		stateValue.txtValue = txtValue;
-		this.setState(stateValue);
-	}
-	onSendClick(){
 
-		this.props.featuresListener("home",this.state.txtValue);
-		this.setState({
-			addWinCls:"windAddNewTask win hidden",
-			txtValue:""
-		});
-	}
+
 	render(){
 		const {todoList,doneList}=this.props;
 		const todoListGroup = this.getListItem(todoList);
@@ -162,6 +171,8 @@ class PageHome extends React.Component{
 			);
 	}
 }
+
+//新增任務畫面
 function AddTaskWindow(props){
 	const winCls = props.addWinCls;
 	return(
@@ -182,6 +193,8 @@ function AddTaskWindow(props){
 		</div>
 		);
 }
+
+// Todo or Done List 實作 
 function ListItem(props){
 	const {count,type,content} = props;
 	const icon = type === "todo"?"icon icon-playback-play":"donListIcon";
@@ -226,7 +239,10 @@ class PageFree_breakfast extends React.Component{
 			);
 	}
 }
+
+//圖表
 class PageInsert_chart extends React.Component{
+	//初始化圖表時間
 	constructor(props){
 		super(props);
 		const nowDate = new Date();
@@ -245,13 +261,16 @@ class PageInsert_chart extends React.Component{
 		this.getDateList = this.getDateList.bind(this);
 		this.getWeekList = this.getWeekList.bind(this);
 		this.setChartWeek = this.setChartWeek.bind(this);
+		this.createChartData = this.createChartData.bind(this);
 	}
+	//取得 指定日期的 todo | done list 
 	getDateList(list , nowDate){
 		return list.filter(function(item){
 			const thisDate = new Date(item.date);
 			return thisDate.getTime() === nowDate.getTime();
 		});
 	}
+	//取得 指定一周 todo | done list 
 	getWeekList(list , nowDate, weekStartDate){
 		return list.filter(function(item){
 			const theDay = new Date(item.date);
@@ -259,6 +278,7 @@ class PageInsert_chart extends React.Component{
 			return  isThisWeek;
 		});
 	}
+	//按圖表一周按鈕動態設定
 	setChartWeek(e ,type){
 		const {start,end} = this.state.chartWeek;
 		const dayMs = 24 * 60 * 60 * 1000;
@@ -293,7 +313,8 @@ class PageInsert_chart extends React.Component{
 			chartWeek:newChartWeek
 		});
 	}
-	createChartDate(doneList,date){
+	//建立圖表資料
+	createChartData(doneList,date){
 		const labels = [];
 		const dataSetData = [];
 		let maxlen= 0;
@@ -321,15 +342,14 @@ class PageInsert_chart extends React.Component{
 						data: dataSetData, 
 						backgroundColor: "#F4D03F",
                       	hoverBackgroundColor:"#F4D03F",
-                        borderSkipped:"bottom",
 						borderWidth: 1 // 外框寬度
 					}]
 				};
 		const option = {
-				legend: {
+				legend: {//標題
 				  	display:false
 				},
-				layout:{
+				layout:{//圖表的 layout
 					padding:{
 						left:10,
 						right:10,
@@ -337,14 +357,14 @@ class PageInsert_chart extends React.Component{
 						bottom:10
 					}
 				},
-				scales: {
+				scales: {//框線設定
 				    xAxes: [
 					    {
 							gridLines:{
 								display:false,
 								color: '#FFF'
 							},
-					    	ticks: {
+					    	ticks: {//刻度
 					          fontSize: 20,
 					          fontColor:"#9F9F9F"
 					      }
@@ -389,7 +409,7 @@ class PageInsert_chart extends React.Component{
 		const weekListLength =  weekTodoList.length + weekDoneList.length;
 
 		const {start,end} = this.state.chartWeek;
-		const chartData= this.createChartDate(doneList,start); 
+		const chartData= this.createChartData(doneList,start); 
 		
 		return (
 			<div>
@@ -435,7 +455,7 @@ class PageInsert_chart extends React.Component{
 			);
 	}
 }
-
+//數字統計 顯示 當天 & 當周的 todo/done
 function NumberStatistics(props){
 	const {type,date,listCount,doneCount} = props;
 	const listCountString = listCount <10? `0${listCount}`: listCount;
@@ -461,6 +481,8 @@ function NumberStatistics(props){
 		);
 
 }
+
+//設定鈴聲
 class PageSettings extends React.Component{
 	constructor(props){
 		super(props);
@@ -471,6 +493,8 @@ class PageSettings extends React.Component{
 		this.createRadioGroup = this.createRadioGroup.bind(this);
 		this.onRadioGroupChange = this.onRadioGroupChange.bind(this);
 	}
+
+	//建立鈴聲選單
 	createRadioGroup(gpName){
 		const ret=[];
 		const {ring} = this.state;
@@ -481,6 +505,7 @@ class PageSettings extends React.Component{
 		});
 		return ret;
 	}
+	//選項切換時的事件
 	onRadioGroupChange(e,type){
 		console.log(e.target)
 		const selectedRing = e.target.value;
@@ -511,6 +536,8 @@ class PageSettings extends React.Component{
 			);
 	}
 }
+
+//建立鈴聲選項按鈕
 function RadioButton(props){
 	const {radioID,radioName,radioText,isChecked} = props;
 	return(
@@ -525,18 +552,22 @@ function RadioButton(props){
 		</div>
 			);
 }
+
+//功能選單
 class MenuList extends React.Component{
 	constructor(props){
 		super(props);
 		this.getMenuItemIcon = this.getMenuItemIcon.bind(this);
 		this.onMenuItemClick = this.onMenuItemClick.bind(this);
 	}
+	//取得選單 Icon 判斷目前是否有被激活
 	getMenuItemIcon(menu){
 		const nowActivePage = this.props.nowActivePage;
 		const isActive = nowActivePage === menu;
 		const ret = isActive?"active":"";
 		return ret;
 	}
+	//按下選單後的事件
 	onMenuItemClick(e){
 		const target = e.target;
 		const menuName = target.dataset.menuname;

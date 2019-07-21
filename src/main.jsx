@@ -3,6 +3,7 @@ import TomatoClock from 'tomatoClock.jsx'
 const nowDate = new Date();
 const list = [];
 const dataLen = 70;
+//設定假資料，總共70筆 ，1天10筆 5筆 todo 5筆 done
 for (let i = 0; i < dataLen; i++) {
 	
 	

@@ -17,10 +17,11 @@ export default class ClockArea extends React.Component{
 		this.setChangeClockState = this.setChangeClockState.bind(this);
 		this.setResetBtnClick = this.setResetBtnClick.bind(this);
 	}
-
+	// 每0.5秒重新整理一次 ClockArea
 	refreshClockArea(){
 		const refreshCount = this.state.refreshCount+1;
 		const countDown=this.state.countDown;
+		//判斷目前倒數有無啟動
 		if(countDown.clockState === "processing")
 			this.countDownCalc();
 
@@ -68,6 +69,7 @@ export default class ClockArea extends React.Component{
 			this.props.onClockStateChange("end",clockType);
 	}
 
+	//接收啟動按鈕狀態並設定倒數中狀態 暫停、啟動
 	setChangeClockState(isProcessing){
 		const nowTime = Date.now();
 			
@@ -86,7 +88,7 @@ export default class ClockArea extends React.Component{
 		
 		this.props.onClockStateChange(countDown.clockState,this.props.clockType);
 	}
-
+	//重設倒數狀態
 	setResetBtnClick(){
 		alert("Reset");
 		this.state = {
@@ -136,6 +138,7 @@ export default class ClockArea extends React.Component{
 			) ;
 	}
 }
+//設定倒數鐘標題 目前時間 & 目前完成數/尚未完成數
 class ClockTitle extends React.Component{
 	constructor(props){
 		super(props);
@@ -165,6 +168,7 @@ class ClockTitle extends React.Component{
 	}
 }
 
+//倒數鐘 顯示區域
 class CountdownClock extends React.Component{
 	constructor(props){
 		super(props);
@@ -198,7 +202,7 @@ class CountdownClock extends React.Component{
 		);
 	}
 }
-
+//倒數鐘按鈕群組 取消、啟動/暫停、重設
 class ClockButtonGroup extends React.Component{
 	constructor(props){
 		super(props);
@@ -208,6 +212,8 @@ class ClockButtonGroup extends React.Component{
 			startBtnIcon:initIcon
 		};
 	}
+
+	//設定目前啟動按鈕的 ICON 並回傳狀態
 	changeStartBtnState(){
 		
 		const clockState = this.props.clockState;

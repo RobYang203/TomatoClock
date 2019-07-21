@@ -34,7 +34,7 @@ class Board extends React.Component{
 		this.setRing = this.setRing.bind(this);
 
 	}
-
+	//接收從倒數鐘傳回來的狀態資訊
 	onClockStateChange(clockState,clockType){
 		this.state.todoList[0]["state"] = clockState;
 		if(clockState === "end"){
@@ -50,6 +50,7 @@ class Board extends React.Component{
 		}
 		console.log(this.state.todoList[0]["state"])
 	}
+	//從功能區回傳的事件
 	featuresListener(type , v){
 		switch(type){
 			case "home":
@@ -63,6 +64,7 @@ class Board extends React.Component{
 		
 
 	}
+	//新增任務
 	addNewTask(v){
 		const stateValue = this.state;
 		const nowDate = new Date();
@@ -76,10 +78,12 @@ class Board extends React.Component{
 		stateValue["list"] = stateValue["list"] .concat(tmp);
 		this.setState(stateValue);
 	}
+	//設定鈴聲
 	setRing(v){
 		this.ringList =v;
 		console.log(v)
 	}
+	//分類 todo / done list
 	getListCategory(type){
 		const list = this.state.list;
 		const ret = list.filter(function(item){
@@ -89,6 +93,7 @@ class Board extends React.Component{
 
 		return ret;
 	}
+	//時間到視窗確認按鈕
 	onConfirmClick(){
 		this.setState({
 			isTimeUp:false
@@ -97,8 +102,10 @@ class Board extends React.Component{
 	render(){
 		this.state.todoList= this.getListCategory("todo");
 		this.state.doneList= this.getListCategory("done");
+
 		const doneLength = this.state.doneList.length;
 		const todoLength= this.state.todoList.length;
+
 		const {isTimeUp , ringName} = this.state;
 		const openWin = isTimeUp?<TimeUpWindow onConfirmClick={this.onConfirmClick}/>:"";
 		const maskClass = isTimeUp?"winMask":"";
@@ -127,6 +134,7 @@ class Board extends React.Component{
 			);
 	}
 }
+//時間到鈴聲設定
 function TimeUpRing(props){
 	const {ringName} = props;
 	const ringSrc = ringName === null?"":`./css/audio/${ringName}.mp3`
@@ -134,6 +142,7 @@ function TimeUpRing(props){
 		<iframe src={ringSrc} allow="autoplay" style={{display:"none"}}></iframe>
 		);
 }
+//時間到提醒視窗
 function TimeUpWindow(props){
 	return(
 		<div className="win winTimeUp">
