@@ -42,7 +42,7 @@ export default class ClockArea extends React.Component{
 		
 		//設定倒數秒數
 		const workTime = 25 , breakTime = 5;
-		const totalMin = isBreak?workTime:breakTime;
+		const totalMin = !isBreak?workTime:breakTime;
 
 		//轉成 ms
 		const totalTime = totalMin*60*1000;
