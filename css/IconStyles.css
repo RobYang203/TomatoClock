@@ -40,15 +40,27 @@
 .icon{
  
 }
+.icon-large::before{
+  font-size: 112px;
+  line-height: 1.1;
+}
+.icon-small::before{
+  font-size: 59.2px;
+  line-height: 1.1;
+}
+
 .icon-times:before {
   content: "\61";
 }
 .icon-cw:before {
   content: "\62";
+  line-height: 1.2;
+  padding-left: 5px;
 }
 .icon-playback-play:before {
   content: "\63";
 }
 .icon-playback-pause:before {
   content: "\64";
+  margin-left: -5px;
 }

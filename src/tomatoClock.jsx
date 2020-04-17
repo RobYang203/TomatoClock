@@ -1,5 +1,5 @@
 import React from 'react'
-import ClockArea from 'ClockArea.jsx'
+import ClockArea from 'ClockArea_new.jsx'
 import FeaturesArea from 'FeaturesArea.jsx'
 export default class tomatoClock extends React.Component{
 	constructor(props){

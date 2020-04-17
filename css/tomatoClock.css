@@ -1,69 +1,108 @@
+::-webkit-scrollbar {
+	width: 15px;
+} 
+
+/*scroll 軌道*/
+::-webkit-scrollbar-track {
+	background-color: #1B2A3B;
+	border-radius: 20px;
+} /* the new scrollbar will have a flat appearance with the set background color */
+/*滑動條*/
+::-webkit-scrollbar-thumb {
+	background-color: #F4D03F; 
+	border-radius: 20px
+} /* this will style the thumb, ignoring the track */
+/*scroll 上下按鈕*/
+::-webkit-scrollbar-button {
+  display: none;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+
+/*x y 的交匯處*/
+::-webkit-scrollbar-corner {
+	background-color: black;
+
+} 
+
+body{
+	padding: 0;
+}
 .t-bgColor{
 	display:inline-block;
-	width:1280px;
-	height:800px;
+	width: 100%;
+    height: calc(100vw / 1.8);
 	background:#c3c3c3;
 }
 
-.clockArea{
-	display:inline-block;
-	width:50%;
-	height: 100%;
-	background: #283645;
-}
+
 .titleGroup{
-	margin: 65px 0 0 104px ;
+	position: relative;
+	margin: 65px 0 0 0px ;
+	text-align: center;
+	height: 10%;
 }
-.nowDateTime{	
-	display:inline-block;
-	width: 165px;
+.nowDateTime{
+	position: absolute;	
+	/* display:inline-block; */
+	/* width: 165px; */
+	left: 3vw;
+	text-align: left;
 }
 .nowDone{
-	margin: 0px 0 0 90px;
-	display:inline-block;
-	width: 165px;
+	position: absolute;
+	/* margin: 0px 0 0 90px; */
+	/* display:inline-block; */
+	/* width: 165px; */
 	text-align: right;
+	right: 3vw;
 }
 .titleGroup  .title{
-	font-size: 21px;
+	font-size: 1.3em;
 	color:#9F9F9F;
 }
 .titleGroup .content{
-	font-size: 42px;
+	font-size: 2.4em;
 	color:#FFFFFF;
 }
-
+.clockBorder{
+	text-align: center;
+}
 .clockBody{
+	position: relative;
 	display:inline-block;
-	margin: 25px 0 0 104px;
-	width: 420px;
-	height:420px;
+	margin: 25px 0 0 0px;
+	width: 28vw;
+    height: 28vw;
 	background: rgba(27, 42, 59, 0.5);
 	border:8px solid #1B2A3B;
-	border-radius: 210px;
+	border-radius: 28vw;
 	color: #F4D03F;
 }
 .clockBody.break{
 	color:#19B5FE;
 }
 .clockState{
-	text-align: center;
-	display:inline-block;
-	width: 209px;
+	position: absolute;
+	/* text-align: center; */
+	/* display:inline-block; */
+	width: 100%;
 	height:37px;
-	margin: 107px 0 0 106px;
-	font-size: 30px;
+	/* margin: 2em 0 0 0px; */
+	font-size: 2em;
 	font-family: Myriad Pro,Myriad Pro;
+	top:10%;
 }
 
 .countDownArea{
-	margin: 1px 0 0 56px;
-	font-size: 130px;
+	position: absolute;
+	width: 100%;
+	/* margin: 1px 0 0 0px; */
+	font-size: 7.5em;
 	font-family: Myriad Pro,Myriad Pro;
+	top: 30%;
 }
 .clkButtonGroup{
 	text-align: center;
-	margin-top: 38px
+	margin-top: 16px
 }
 .clkBtn{
 	display:inline-block;
@@ -72,17 +111,22 @@
 	height:61.47px;
 	border-radius: 38px;
 	border:5px solid #FFFFFF;
-	font-size: 3em;
 	color: #FFFFFF;
 	text-align: center;
 }
-.clkBtn .icon{
-	 margin-top: 9px;
+.clkBtn:hover{
+	color:#283645;
+	background-color: #FFF;
 }
+.clkBtn:active{
+	transform: scale(.9);
+}
+/*.clkBtn .icon{
+	 margin-top: 9px;
+}*/
 .clkBtn.startBtn{
 	width: 100px;
 	height:100px;
-	font-size: 6em;
 	border-radius: 70px;
 	border:8px solid #FFFFFF;
 	margin:0 23.53px 0 23.53px;
@@ -92,26 +136,11 @@
 	vertical-align: top;
 	background:#33404e;
 	display:inline-block;
-	width:50%;
+	/* width:60%; */
 	height: 100%;
 }
 
-.featureContent{
-	vertical-align: top;
-	background:#33404e;
-	display:inline-block;
-	width:80%;
-	height: 100%;
-}
 
-.menuList{
-	vertical-align: top;
-	background:#0D151D;
-	display:inline-block;
-	width:20%;
-	height: 100%;
-	box-shadow: 2px 0 5px #000000
-}
 .menuItem:first-child{
 	margin:71px 0 0 0;
 }
@@ -159,25 +188,41 @@
 	-webkit-mask: url(image/outline-settings-24px.svg);
 	mask: url(image/outline-settings-24px.svg);
 }
+.Page{
+	position: relative;
+}
+.Page > .toolbar{
+	position: relative;
+	height: 50px;
+	padding: 15px 5px;
+}
 .btnAddTask{
 	display: inline-block;
-	width: 157.75px;
-	height: 50px;
 	border-radius: 30px;
 	background: #F4D03F;
-	margin: 67px 0 0 289px
+	padding: 10px;
+	float: right;
+	margin: 0px 10px 0 0 ;
 }
+.btnAddTask:hover{
+	background: #1B2A3B;
+	color: #F4D03F;
+	border: 1px solid #F4D03F;
+}
+.btnAddTask:active{
+	transform: scale(.8);
+}
+
 .btnContent{
 	display: inline-block;
-    margin: 7.25px 0 0 12px;
 }
 .btnContent .btnName{
 	vertical-align: top;
 	display: inline-block;
-	font-size: 24px;
+	font-size: 1.5em;
 	line-height: 35px;
 }
-.btnContent .btnIcon{
+.btnAddTask .btnContent .btnIcon{
 	vertical-align: top;
 	-webkit-mask: url(image/outline-add_circle_outline-24px.svg);
 	mask: url(image/outline-add_circle_outline-24px.svg);
@@ -186,10 +231,12 @@
     height: 36px;
     background: #000;
 }
-
+.btnAddTask:hover .btnContent .btnIcon{
+	background: #F4D03F;
+}
 .pageContent{
-	display: inline-block;
-	margin: 29px 0 0 65px
+	/* display: inline-block; */
+	margin: 15px 0 0 65px
 }
 .pageContent .title{
 	font-size: 30px;
@@ -199,18 +246,18 @@
 	padding: 0px
 }
 .list > .content > ul > li{
-	display: inline-block;
+	/* display: inline-block; */
 	list-style: none;
 	background: #1B2A3B;
 	padding: 12px 37px 12px 19.46px;
 	margin: 5px 0px;
-	width: 290px;
-	height:16px;
+	/* width: 290px;
+	height:16px; */
 	color: #FFF;
 }
 .list > .content{
 	overflow: auto;
-	height: 250px;
+	height: calc(43vw / 1.8 - 70px);
 	display: inline-block;
 	width: 90%;
 
@@ -218,30 +265,6 @@
 .list > .content > .scrollBar{
 
 }
-::-webkit-scrollbar {
-      width: 15px;
-} 
-
-/*scroll 軌道*/
-::-webkit-scrollbar-track {
-      background-color: #1B2A3B;
-      border-radius: 20px;
-} /* the new scrollbar will have a flat appearance with the set background color */
- /*滑動條*/
-::-webkit-scrollbar-thumb {
-      background-color: #F4D03F; 
-      border-radius: 20px
-} /* this will style the thumb, ignoring the track */
- /*scroll 上下按鈕*/
-::-webkit-scrollbar-button {
-	display: none;
-} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
- 
- /*x y 的交匯處*/
-::-webkit-scrollbar-corner {
-      background-color: black;
-
-} 
 
 .listContent{
 	display: inline-block;
@@ -261,7 +284,7 @@
 	text-decoration:line-through;
 }
 .donListIcon{
-	vertical-align: top;
+	/* vertical-align: top; */
 	-webkit-mask: url(image/iconfinder_check_293662.svg);
 	mask: url(image/iconfinder_check_293662.svg);
 	display: inline-block;
@@ -341,7 +364,7 @@
 }
 
 .numberStatistics{
-	margin: 109px 0 0 0;
+	margin: 3.5vw 0 0 0;
 }
 .numberStatistics .column{
 	display: inline-block;
@@ -350,12 +373,12 @@
 	margin: 0 0 0 10px
 }
 .numberStatistics .column .title .type{
-	font-size: 42px;
+	font-size: 2.5em;
 	color:  #FFFFFF;
 }
 
 .numberStatistics .column .title .date{
-	font-size: 21px;
+	font-size: 1.1em;
 	color:  #9F9F9F;
 	margin: 0 0 0 20px;
 }
@@ -370,13 +393,13 @@
 {
 	display: inline-block;
     width: 0px;
-    height: 105px;
+    height: 3em;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .numberStatistics .column .content .data{
 	display: inline-block;
-	font-size: 70px;
+	font-size: 3em;
 	color:  #FFFFFF;
 	margin: 20px 25.5px 20px 23px
 }
@@ -397,34 +420,39 @@
 }
 
 .chartStatistics{
-	margin: 33px 0 0 10px ;
+	margin: 2em 0 0 10px ;
 	display: inline-block;
 	width: 100%;
 }
 .chartStatistics .nav{
-	font-size: 42px;
+	font-size: 3em;
 	color:#FFF;
+	height: 70px;
 }
 .chartStatistics .weekControl{
-	float: right;
 	display: inline-block;
-	width: 365px;
+	/* width: 60%; */
+	padding: 10px 0;
+	height: 70px;
+	vertical-align: top;
 }
 .chartStatistics .btn{
 	position: relative;
 	display: inline-block;
-	margin: 0px 10px 0 10px
+	margin: 10px 10px 0 10px;
+	width: 30px;
+	height: 30px;
 }
 .chartStatistics .arrow{
 	display: inline-block;
 	width: 0px;
 	height: 0px;
 	border: 15px solid;
+	vertical-align: top;
 	
 }
 .chartStatistics .arrow.background{
 	position: absolute;
-	top:8px;
 	
 }
 .chartStatistics .btnNext .arrow{
@@ -435,6 +463,17 @@
 	left: -3px;
 }
 
+.chartStatistics .btnNext:hover .arrow{
+	border-color: transparent transparent transparent #33404e ;	
+}
+.chartStatistics .btnNext:hover .arrow.background{
+	border-color: transparent transparent transparent  #F4D03F;	
+	left: -3px;
+}
+.chartStatistics .btnNext:active{
+	transform:scale(.8);
+}
+
 .chartStatistics .btnPre .arrow.background{
 	border-color: transparent #33404e transparent transparent;	
 	left: 3px;
@@ -443,9 +482,20 @@
 	border-color: transparent #F4D03F transparent transparent ;	
 }
 
+.chartStatistics .btnPre:hover .arrow.background{
+	border-color: transparent #F4D03F transparent transparent;	
+	left: 3px;
+}
+.chartStatistics .btnPre:hover .arrow{
+	border-color: transparent #33404e transparent transparent ;	
+}
+
+.chartStatistics .btnPre:active{
+	transform:scale(.8);
+}
 .chartStatistics  .weekView{
 	color:#FFFFFF;
-	font-size: 21px;
+	font-size: .5em;
 	display: inline-block;
 	margin-top: 11px;
 	vertical-align: top;
@@ -454,8 +504,8 @@
 	border-radius: 5px;
 	background: #1B2A3B;
 	display: inline-block;
-	width: 490px;
-	height: 318px;
+	width: 90%;
+	height: 22vw;
 	box-shadow: 0 3px 6px #000000;
 	margin-top: 16px;
 }
@@ -494,13 +544,14 @@ input[type="radio"] + label{
 }
 input[type="radio"] + label .radioBorder{
 	display: inline-block;
-	width: 19.9px;
-	height: 19.9px;
-	border:3px solid #FFF;
-	border-radius: 15px;
-	text-align: center;
-	vertical-align: middle;
-	margin: 5px 5px;
+    width: 3vw;
+    height: 3vw;
+    border: 3px solid #FFF;
+    border-radius: 3vw;
+    text-align: center;
+    vertical-align: middle;
+    margin: 5px 5px;
+    position: relative;
 }
 
 input[type="radio"]:checked + label{
@@ -510,25 +561,25 @@ input[type="radio"]:checked + label .radioBorder{
 	border:3px solid #F4D03F;
 }
 input[type="radio"]:checked + label .radopChecked{
-    display: inline-block;
-	width: 10.9px;
-	height: 10.9px;
-	border:1px solid #F4D03F;
-	border-radius: 10px;
-	background: #F4D03F;
-	margin-top: 3px;
+	display: inline-block;
+    width: 2vw;
+    height: 2vw;
+    border: 1px solid #F4D03F;
+    border-radius: 2vw;
+    background: #F4D03F;
+    margin-top: .2em;
 }
 .settingArea{
 	margin: 5px 0 0 10px;
 }
 .settingArea .title{
 	color:#FFF;
-	font-size: 42px;
+	font-size: 3em;
 }
 .settingArea .content{
 	display: inline-block;
-	width: 480px;
-	height: 240px;
+	width: 100%;
+	/* height: 240px; */
 	background: #1B2A3B;
 	margin: 12px 0 0 0;
 	border-radius: 5px
@@ -537,4 +588,7 @@ input[type="radio"]:checked + label .radopChecked{
 	display: inline-block;
 	width: 30%;
 	padding: 5px;
+}
+.radioItem label{
+	font-size: 1.5em;
 }

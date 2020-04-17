@@ -52,7 +52,7 @@ export default class FeaturesArea extends React.Component{
 	render(){
 		const nowActiveFeature = this.getActivePage(this.state.nowActivePage);
 		return (
-			<div className="featuresArea">
+			<>
 				<div className="featureContent">
 					{nowActiveFeature}
 				</div>
@@ -60,7 +60,7 @@ export default class FeaturesArea extends React.Component{
 					nowActivePage = {this.state.nowActivePage}
 					setPageChange = {this.setPageChange}
 				/>
-			</div>
+			</>
 			);
 	}
 }
@@ -132,13 +132,16 @@ class PageHome extends React.Component{
 		const doneListGroup = this.getListItem(doneList);
 		return (
 			<div className="Page">
-				<div className="btnAddTask" onClick={this.onAddTaskClick}>
-					<div className="btnContent">
-						<div className="btnIcon"></div>
-						<div className="btnName">Add Task</div>
+				<div className="toolbar">
+					<div className="btnAddTask" onClick={this.onAddTaskClick}>
+						<div className="btnContent">
+							<div className="btnIcon"></div>
+							<div className="btnName">Add Task</div>
+						</div>
+						
 					</div>
-					
 				</div>
+
 				<div className="pageContent">
 					<AddTaskWindow 
 						addWinCls={this.state.addWinCls}

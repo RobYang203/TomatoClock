@@ -1,0 +1,167 @@
+@media screen AND (orientation:landscape){
+	.clockArea{
+		display:inline-block;
+		width:calc(((100vw - (100vw - 100%) - 110px)/2) );
+		height: 100%;
+		background: #283645;
+	}
+	.featureContent{
+		vertical-align: top;
+		background:#33404e;
+		display:inline-block;
+		width: calc(((100vw - (100vw - 100%) - 110px)/2));
+		height: 100%;
+	}
+	
+	.menuList{
+		vertical-align: top;
+		background:#0D151D;
+		display:inline-block;
+		width: 110px;
+		height: 100%;
+		box-shadow: 2px 0 5px #000000
+    }
+    
+    .clockBody{
+        width: 28vw;
+        height: 28vw;
+        border-radius: 28vw;
+    }
+
+    .list > .content{
+        height: calc(43vw / 1.8 - 80px);   
+    }
+
+    .numberStatistics{
+        margin: 3.5vh 0 0 0;
+    }
+
+    .chartStatistics{
+        margin: .8em 0 0 10px ;
+    }
+
+    .chartStatistics > .content{
+        height: 22vw;
+        margin-top: 16px;
+    }
+
+    input[type="radio"] + label .radioBorder{
+        width: 3vw;
+        height: 3vw;
+        border-radius: 3vw;
+    }
+    
+    input[type="radio"]:checked + label .radopChecked{
+        display: inline-block;
+        width: 2vw;
+        height: 2vw;
+        border-radius: 2vw;
+    }
+}
+
+@media screen AND (min-width:910px) AND (max-width:1030px) AND (orientation:landscape){
+	body{
+		font-size: 12px;
+	}
+	.clkButtonGroup{
+		transform-origin: top;
+		transform: scale(.5);
+	}
+	::-webkit-scrollbar{
+		width: 10px;
+		height: 10px;
+	}
+}
+@media screen AND (max-width:900px) AND (orientation:landscape){
+	body{
+		font-size: 10px;
+	}
+	.clkButtonGroup{
+		transform-origin: top;
+		transform: scale(.5);
+	}
+	::-webkit-scrollbar{
+		width: 8px;
+	}
+}
+
+
+@media screen AND (orientation:portrait){
+	body{
+		margin: 0;
+		font-size: 25px;
+	}
+	.clockArea{
+		display:inline-block;
+		width:calc(100vw - 170px);
+		height: 50vh;
+		background: #283645;
+		/* z-index: 10;
+		left: 0px;
+		top:0px; */
+	}
+
+	.featureContent{
+		display: inline-block;
+		background:#33404e;
+		/* display:inline-block; */
+		width:calc(100vw - 170px);
+		height: 50vh;
+		vertical-align: top;
+		/* z-index: 0;
+		left: 0px;
+		top:0px; */
+	}
+	
+	.menuList{
+		position: fixed;
+		background:#0D151D;
+		display:inline-block;
+		width: 170px;
+		height: 100%;
+		box-shadow: 2px 0 5px #000000;
+		right: 0px;
+		top:0px;
+    }
+    
+    .clockBody{
+        width: 28vh;
+        height: 28vh;
+        border-radius: 28vh;
+    }
+
+    .list > .content{
+        height: calc(43vh / 1.8 - 80px);   
+    }
+
+    .numberStatistics{
+        margin: 3.5vw 0 0 0;
+    }
+
+    .chartStatistics{
+        margin: 2em 0 0 10px ;
+    }
+
+    .chartStatistics > .content{
+        height: 22vh;
+        margin-top: 16px;
+    }
+
+    .menuIcon2{
+        transform: scale(1.7);
+        transform-origin: 13px 0px;
+    }
+
+    input[type="radio"] + label .radioBorder{
+        width: 3vh;
+        height: 3vh;
+        border-radius: 3vh;
+    }
+    
+    input[type="radio"]:checked + label .radopChecked{
+        display: inline-block;
+        width: 2vh;
+        height: 2vh;
+        border-radius: 2vh;
+    }
+}
