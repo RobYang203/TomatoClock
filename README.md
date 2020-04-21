@@ -2,7 +2,7 @@
 
 ### tomatoClock.jsx
 ### Board
-統整所有元件
+統整所有元件，保存 ＆整理 資料
 
 ### ClockArea.jsx
 #### ClockArea
