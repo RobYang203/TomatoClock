@@ -6,6 +6,7 @@ export default class ClockArea extends React.Component{
 		this.state = {
 			refreshCount:0
         };
+        //start , pause , reset
         this.cmd = "stop";
 		this.countDownSetting = this.getCountDownSetting(props.clockType);
 	}
@@ -124,8 +125,23 @@ class CountdownClock extends React.Component{
 	constructor(props){
         super(props);
     
+        /*
+        {
+            startMS : 0 ,  
+            totalPauseMS: 0,          
+            clockStatus:"standby , prepare,processing,end"        
+        };
+        */
         this.countDownSetting = {};
+        /*
+        {
+            pauseMS : 0 ,
+            pauseStartMS : 0,
+            clockStatus:"standby,processing" 
+        };
+        */
         this.pauseSetting = {};
+
         this.settingTime =  {}; 
         this.clockType ={};
 
